@@ -1,9 +1,10 @@
+doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <title>Lalu Kumar Tanti | Premium Profile</title>
   <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0" />
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Orbitron:wght@500;700&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <!-- FontAwesome 6.5.1 -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <style>
@@ -11,9 +12,12 @@
       /* Theme Variables */
       --text: #ffffff;
       --gold: #FFD700;
-      --gold-dim: #b39700;
-      --gold-gradient: linear-gradient(135deg, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
-      --premium-bg: linear-gradient(-45deg, #050505, #1a1a2e, #111, #000);
+      
+      /* Dynamic Background Variables (Controlled by JS) */
+      --bg-color-1: #000000;
+      --bg-color-2: #1a1a2e;
+      --bg-color-3: #111111;
+      
       --glass: rgba(0, 0, 0, 0.85);
       --card-border: rgba(255,215,0,0.2);
       --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -22,41 +26,45 @@
     [data-theme="light"] {
       --text: #1a1a1a;
       --gold: #d4af37;
-      --premium-bg: linear-gradient(-45deg, #ffffff, #f0f2f5, #e0e0e0, #ffffff);
       --glass: rgba(255, 255, 255, 0.9);
       --card-border: rgba(0,0,0,0.1);
+      /* Light mode overrides handled in JS for background */
     }
 
     * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
     html { scroll-behavior: smooth; }
-    body { margin: 0; font-family: 'Poppins', sans-serif; background: var(--premium-bg); color: var(--text); overflow-x: hidden; transition: background 0.5s ease; }
+    body { margin: 0; font-family: 'Poppins', sans-serif; background: #000; color: var(--text); overflow-x: hidden; }
 
     /* --- PREMIUM WELCOME ENTRANCE --- */
     #entrance-gate {
       position: fixed; inset: 0; z-index: 10000;
-      background: radial-gradient(circle at center, #1a1a1a 0%, #000000 100%);
+      background: radial-gradient(circle at center, #0a0a0a 0%, #000000 100%);
       display: flex; flex-direction: column; align-items: center; justify-content: center;
       transition: all 1s ease-in-out;
       overflow: hidden;
     }
 
-    /* Background Particles */
-    .bg-particles { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
-    .particle {
-      position: absolute; width: 2px; height: 2px; background: var(--gold);
-      border-radius: 50%; animation: rise 10s infinite linear; opacity: 0;
+    /* SNOWFLAKE CRYSTAL ANIMATION */
+    .snow-container { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+    .snowflake {
+      position: absolute; top: -20px;
+      user-select: none;
+      animation-name: fall;
+      animation-timing-function: linear;
+      animation-iteration-count: infinite;
+      z-index: 0;
     }
-    @keyframes rise {
-      0% { transform: translateY(110vh) scale(0); opacity: 0; }
-      50% { opacity: 0.8; }
-      100% { transform: translateY(-10vh) scale(1); opacity: 0; }
+    @keyframes fall {
+      0% { transform: translateY(-20px) rotate(0deg); opacity: 0; }
+      10% { opacity: 0.9; }
+      100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
     }
 
     /* 3D Gyroscope Photo Wrapper */
     .gyro-container {
-      position: relative; width: 180px; height: 180px; margin-bottom: 30px;
+      position: relative; width: 160px; height: 160px; margin-bottom: 20px;
       display: flex; align-items: center; justify-content: center;
-      perspective: 1000px;
+      perspective: 1000px; z-index: 10;
     }
     .gyro-ring {
       position: absolute; inset: -10px; border-radius: 50%;
@@ -71,37 +79,55 @@
     @keyframes spinReverse { 0% { transform: rotate(360deg); } 100% { transform: rotate(0deg); } }
 
     .welcome-photo {
-      width: 140px; height: 140px; border-radius: 50%;
+      width: 130px; height: 130px; border-radius: 50%;
       border: 3px solid #fff; object-fit: cover;
       box-shadow: 0 0 40px rgba(255, 215, 0, 0.4);
       position: relative; z-index: 2;
     }
 
-    /* Premium Text */
-    .swagat-title {
-      font-family: 'Cinzel', serif;
-      font-size: 32px; font-weight: 700;
-      background: var(--gold-gradient);
+    /* --- SPECIAL WELCOME PAGE NAME (Very Small & Colorful) --- */
+    .welcome-small-name {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 14px; font-weight: 700;
+      letter-spacing: 3px; text-transform: uppercase;
+      background: linear-gradient(90deg, #ff0000, #ffff00, #00ff00, #00ffff, #0000ff, #ff00ff, #ff0000);
+      background-size: 400%;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      letter-spacing: 2px; text-transform: uppercase;
-      margin: 10px 0; text-shadow: 0 5px 15px rgba(0,0,0,0.5);
-      z-index: 10;
+      animation: rainbowAnim 8s linear infinite;
+      margin: 15px 0 5px; z-index: 10;
+      border: 1px solid rgba(255,255,255,0.2);
+      padding: 5px 15px; border-radius: 20px;
+      background-color: rgba(0,0,0,0.5);
     }
+    @keyframes rainbowAnim { 0% { background-position: 0%; } 100% { background-position: 400%; } }
+
     .subtitle {
-      font-size: 12px; letter-spacing: 4px; color: rgba(255,255,255,0.6);
+      font-size: 10px; letter-spacing: 2px; color: rgba(255,255,255,0.5);
       text-transform: uppercase; margin-bottom: 30px; z-index: 10;
     }
 
     .enter-btn {
       background: transparent; border: 1px solid var(--gold); color: var(--gold);
-      padding: 15px 45px; border-radius: 50px; font-weight: 700;
+      padding: 12px 35px; border-radius: 50px; font-weight: 700;
       text-transform: uppercase; cursor: pointer; letter-spacing: 2px;
-      transition: 0.4s; z-index: 10; font-family: 'Poppins', sans-serif;
+      transition: 0.4s; z-index: 10; font-family: 'Poppins', sans-serif; font-size: 12px;
       box-shadow: 0 0 20px rgba(255,215,0,0.1);
       position: relative; overflow: hidden;
     }
     .enter-btn:hover { background: var(--gold); color: #000; box-shadow: 0 0 40px var(--gold); }
+
+    /* --- DYNAMIC BACKGROUND MESH --- */
+    .mesh-bg {
+      position: fixed; inset: 0; z-index: -1;
+      /* Using CSS Variables that JS will update */
+      background: linear-gradient(-45deg, var(--bg-color-1), var(--bg-color-2), var(--bg-color-3));
+      background-size: 400% 400%;
+      /* meshAnim moves the gradient, transition makes the color change smooth */
+      animation: meshAnim 15s ease infinite;
+      transition: background 4s ease-in-out; 
+    }
+    @keyframes meshAnim { 0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%} }
 
     /* --- SETTINGS BUTTON & MODAL --- */
     .settings-icon {
@@ -147,13 +173,6 @@
     .lang-select option { background: #000; color: #fff; }
 
     /* --- MAIN UI --- */
-    .mesh-bg {
-      position: fixed; inset: 0; z-index: -1;
-      background: var(--premium-bg); background-size: 400% 400%;
-      animation: meshAnim 15s ease infinite; opacity: 0; transition: 2s;
-    }
-    @keyframes meshAnim { 0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%} }
-
     .reveal { opacity: 0; transform: translateY(30px); transition: 0.8s; }
     .opened .reveal { opacity: 1; transform: translateY(0); }
 
@@ -164,7 +183,8 @@
     }
     .profile-box img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; }
 
-    h1 { margin: 15px 0 5px; font-size: 30px; color: var(--gold); font-weight: 800; font-family: 'Cinzel', serif; }
+    /* Main Page Name (Big & Gold) */
+    h1 { margin: 15px 0 5px; font-size: 32px; color: var(--gold); font-weight: 800; font-family: 'Cinzel', serif; }
     .location-text { font-weight: 600; opacity: 0.8; font-size: 13px; color: var(--text); }
 
     .main-card {
@@ -286,17 +306,19 @@
   
   <!-- PREMIUM ENTRANCE -->
   <div id="entrance-gate">
-    <div class="bg-particles" id="particles"></div>
+    <!-- Snow Container -->
+    <div class="snow-container" id="snow-container"></div>
     
     <div class="gyro-container">
       <div class="gyro-ring ring-3"></div>
       <div class="gyro-ring ring-2"></div>
       <div class="gyro-ring ring-1"></div>
-      <!-- Your Google Profile Picture -->
+      <!-- Google Profile Picture -->
       <img src="https://i.ibb.co/X3L7m58/portrait.jpg" alt="Lalu Kumar Tanti" class="welcome-photo">
     </div>
 
-    <div class="swagat-title" data-key="name">Lalu Kumar Tanti</div>
+    <!-- VERY SMALL COLORFUL NAME FOR WELCOME PAGE -->
+    <div class="welcome-small-name" data-key="name">Lalu Kumar Tanti</div>
     <div class="subtitle">VERIFIED SULTAN</div>
     
     <button class="enter-btn" onclick="enterExperience()">
@@ -323,12 +345,12 @@
       </label>
     </div>
     <div class="setting-item">
-      <span class="setting-label">LANGUAGE / à¤­à¤¾à¤·à¤¾</span>
+      <span class="setting-label">LANGUAGE / भाषा</span>
       <select class="lang-select" onchange="changeLanguage(this.value)">
         <option value="en">English (Default)</option>
-        <option value="hi">Hindi (à¤¹à¤¿à¤‚à¤¦à¥€)</option>
-        <option value="bn">Bengali (à¦¬à¦¾à¦‚à¦²à¦¾)</option>
-        <option value="es">Spanish (EspaÃ±ol)</option>
+        <option value="hi">Hindi (हिंदी)</option>
+        <option value="bn">Bengali (বাংলা)</option>
+        <option value="es">Spanish (Español)</option>
       </select>
     </div>
   </div>
@@ -383,7 +405,7 @@
   </div>
 
   <footer>
-    Â© 2026 LALU KUMAR TANTI | ALL RIGHTS RESERVED
+    © 2026 LALU KUMAR TANTI | ALL RIGHTS RESERVED
   </footer>
 
   <!-- SULTAN AI WIDGET -->
@@ -398,10 +420,287 @@
     </div>
     <div class="chat-body" id="chatBody">
       <div class="chat-msg bot">
-        Namaste! ðŸ™ I am Lalu's Personal AI.<br><br>
+        Namaste! 🙏 I am Lalu's Personal AI.<br><br>
         Ask me for his <b>Instagram</b>, <b>WhatsApp</b>, <b>GitHub</b>, or ask <b>"How to pay?"</b>.
       </div>
     </div>
     <div class="typing" id="typingIndicator">Sultan AI is typing...</div>
     <div class="chat-input-area">
-      <input type="text" id="chatInput" class="chat-input" plac
+      <input type="text" id="chatInput" class="chat-input" placeholder="Ask anything..." onkeypress="handleEnter(event)">
+      <button class="chat-send" onclick="sendMessage()"><i class="fa-solid fa-paper-plane"></i></button>
+    </div>
+  </div>
+
+  <script>
+    /* --- DYNAMIC BACKGROUND ENGINE (PREMIUM) --- */
+    const bgEngine = (() => {
+      // 5 Premium Color Palettes
+      const palettes = [
+        ['#050505', '#1a1a2e', '#4a00e0'], // 1. Deep Cyber (Default)
+        ['#0f0c29', '#302b63', '#24243e'], // 2. Mystic Purple
+        ['#1c1c1c', '#2c3e50', '#000000'], // 3. Midnight Steel
+        ['#190a0a', '#4a0e0e', '#000000'], // 4. Crimson Elite
+        ['#000428', '#004e92', '#000000']  // 5. Royal Blue
+      ];
+      
+      const lightPalettes = [
+        ['#ffffff', '#f0f2f5', '#e0e0e0'],
+        ['#e6e9f0', '#eef1f5', '#ffffff'],
+        ['#fdfbfb', '#ebedee', '#fdfbfb']
+      ];
+
+      let currentIndex = 0;
+      let interval;
+
+      const update = () => {
+        const isLight = document.body.getAttribute('data-theme') === 'light';
+        const currentSet = isLight ? lightPalettes : palettes;
+        
+        currentIndex = (currentIndex + 1) % currentSet.length;
+        const p = currentSet[currentIndex];
+
+        const root = document.documentElement;
+        root.style.setProperty('--bg-color-1', p[0]);
+        root.style.setProperty('--bg-color-2', p[1]);
+        root.style.setProperty('--bg-color-3', p[2]);
+      };
+
+      return {
+        start: () => {
+          interval = setInterval(update, 6000); // Change every 6 seconds
+        },
+        refresh: () => {
+          currentIndex = -1; // Reset to start
+          update();
+        }
+      };
+    })();
+
+    bgEngine.start();
+
+    /* --- DATA & CONFIG --- */
+    const dictionary = {
+      en: { welcome: "SWAGAT HAI", enterBtn: "Enter Profile", name: "Lalu Kumar Tanti", location: "Jaipur, Banka, Bihar, India", verified: "VERIFIED SULTAN", call: "Direct Call", sms: "Text Message", email: "Send Email", gmap: "Google Maps", bmap: "Business Map" },
+      hi: { welcome: "स्वागत है", enterBtn: "प्रवेश करें", name: "लालू कुमार तांती", location: "जयपुर, बांका, बिहार, भारत", verified: "सत्यापित सुल्तान", call: "कॉल करें", sms: "मैसेज भेजें", email: "ईमेल भेजें", gmap: "गूगल मैप्स", bmap: "बिजनेस मैप" },
+      bn: { welcome: "স্বাগতম", enterBtn: "প্রবেশ করুন", name: "লালু কুমার তাঁতি", location: "জয়পুর, বাঁকা, বিহার, ভারত", verified: "যাচাইকৃত সুলতান", call: "কল করুন", sms: "এসএমএস পাঠান", email: "ইমেল পাঠান", gmap: "গুগল ম্যাপস", bmap: "ব্যবসা মানচিত্র" },
+      es: { welcome: "BIENVENIDO", enterBtn: "Entrar", name: "Lalu Kumar Tanti", location: "Jaipur, Banka, Bihar, India", verified: "SULTÁN VERIFICADO", call: "Llamar", sms: "Mensaje", email: "Enviar Correo", gmap: "Mapas Google", bmap: "Mapa Negocio" }
+    };
+
+    /* --- BOT KNOWLEDGE BASE --- */
+    const knowledgeBase = {
+      socials: {
+        instagram: "https://www.instagram.com/lalu_kumar_tanti",
+        facebook: "https://www.facebook.com/lalukumartantii",
+        whatsapp: "https://wa.me/919771617808",
+        linkedin: "https://in.linkedin.com/in/lalu-kumar-tanti-540185351",
+        twitter: "https://x.com/LaluKumarTanti",
+        github: "https://github.com/lalukumartanti",
+        youtube: "https://www.youtube.com/@Lalu_Kumar_Tanti",
+        telegram: "https://t.me/Lalu_kumar_tanti_0",
+        snapchat: "https://www.snapchat.com/add/lalu_kumar77",
+        threads: "https://www.threads.net/@lalu_kumar_tanti",
+        spotify: "https://open.spotify.com/user/31c4utsldd2omujkcxyjbrwgvnou"
+      },
+      payment: "upi://pay?pa=9771617808-2@ybl&pn=Lalu%20Kumar%20Tanti&cu=INR",
+      phone: "+91 9771317808"
+    };
+
+    /* --- FUNCTIONS --- */
+    function toggleSettings() { document.getElementById('settingsModal').classList.toggle('active'); }
+
+    function toggleTheme() {
+      const isChecked = document.getElementById('themeSwitcher').checked;
+      document.body.setAttribute('data-theme', isChecked ? 'light' : '');
+      bgEngine.refresh(); // Update background immediately
+    }
+
+    function changeLanguage(lang) {
+      const data = dictionary[lang];
+      document.querySelectorAll('[data-key]').forEach(el => {
+        const key = el.getAttribute('data-key');
+        if(data[key]) el.innerText = data[key];
+      });
+    }
+
+    /* --- ADVANCED AI BOT LOGIC --- */
+    function toggleChat() {
+      const win = document.getElementById('chatWindow');
+      win.classList.toggle('active');
+      if(win.classList.contains('active')) {
+        setTimeout(() => document.getElementById('chatInput').focus(), 400);
+      }
+    }
+
+    function handleEnter(e) { if(e.key === 'Enter') sendMessage(); }
+
+    function sendMessage() {
+      const input = document.getElementById('chatInput');
+      const text = input.value.trim().toLowerCase();
+      if(!text) return;
+
+      addMessage(input.value, 'user');
+      input.value = '';
+      
+      const typer = document.getElementById('typingIndicator');
+      typer.style.display = 'block';
+      const chatBody = document.getElementById('chatBody');
+      chatBody.scrollTop = chatBody.scrollHeight;
+
+      setTimeout(() => {
+        typer.style.display = 'none';
+        const response = getBotResponse(text);
+        addMessage(response, 'bot');
+      }, 800 + Math.random() * 500); 
+    }
+
+    function getBotResponse(text) {
+      if(text.includes('insta')) return `Here is Lalu's Instagram: <br><a href="${knowledgeBase.socials.instagram}" target="_blank">Open Instagram</a>`;
+      if(text.includes('face') || text.includes('fb')) return `Check his Facebook here: <br><a href="${knowledgeBase.socials.facebook}" target="_blank">Open Facebook</a>`;
+      if(text.includes('what') || text.includes('app') || text.includes('chat')) return `Chat on WhatsApp directly: <br><a href="${knowledgeBase.socials.whatsapp}" target="_blank">Open WhatsApp</a>`;
+      if(text.includes('link') || text.includes('in')) return `Connect on LinkedIn: <br><a href="${knowledgeBase.socials.linkedin}" target="_blank">Open LinkedIn</a>`;
+      if(text.includes('git') || text.includes('code') || text.includes('repo')) return `Explore his Code on GitHub: <br><a href="${knowledgeBase.socials.github}" target="_blank">Open GitHub</a>`;
+      if(text.includes('tweet') || text.includes('twitter') || text.includes('x')) return `Follow on X (Twitter): <br><a href="${knowledgeBase.socials.twitter}" target="_blank">Open X Profile</a>`;
+      if(text.includes('tube') || text.includes('video') || text.includes('channel')) return `Watch on YouTube: <br><a href="${knowledgeBase.socials.youtube}" target="_blank">Open YouTube</a>`;
+      if(text.includes('tele')) return `Join Telegram: <br><a href="${knowledgeBase.socials.telegram}" target="_blank">Open Telegram</a>`;
+      if(text.includes('snap')) return `Add on Snapchat: <br><a href="${knowledgeBase.socials.snapchat}" target="_blank">Open Snapchat</a>`;
+
+      if(text.includes('pay') || text.includes('money') || text.includes('upi') || text.includes('gpay') || text.includes('phonepe')) {
+        return `You can send payments via UPI.<br><b>ID:</b> 9771617808-2@ybl<br><a href="${knowledgeBase.payment}">Click to Pay Now</a>`;
+      }
+
+      if(text.includes('number') || text.includes('call') || text.includes('phone')) {
+        return `His official number is: <b>${knowledgeBase.phone}</b>.<br>You can click the blue 'Direct Call' button above.`;
+      }
+      
+      if(text.includes('who') || text.includes('lalu') || text.includes('bio')) {
+        return `Lalu Kumar Tanti is a Tech Expert from <b>Banka, Bihar</b>. He is a developer, content creator, and social influencer.`;
+      }
+      
+      if(text.includes('hi') || text.includes('hello') || text.includes('hey')) {
+        return "Hello there! 👋 I am ready to help you find links or info about Lalu.";
+      }
+
+      return "I didn't quite catch that. Try asking for: <b>Instagram, WhatsApp, GitHub,</b> or <b>Payment Info</b>.";
+    }
+
+    function addMessage(html, type) {
+      const body = document.getElementById('chatBody');
+      const div = document.createElement('div');
+      div.className = `chat-msg ${type}`;
+      div.innerHTML = html;
+      body.appendChild(div);
+      body.scrollTop = body.scrollHeight;
+      if(type === 'bot' && navigator.vibrate) navigator.vibrate(20);
+    }
+
+    /* --- SNOW CRYSTAL ANIMATION --- */
+    function createSnow() {
+      const container = document.getElementById('snow-container');
+      const colors = ['#ffffff', '#FFD700', '#00D2FF', '#FF00E0', '#ADFF2F'];
+      for (let i = 0; i < 50; i++) {
+        const el = document.createElement('div');
+        el.className = 'snowflake';
+        el.innerText = '❄';
+        el.style.left = Math.random() * 100 + '%';
+        el.style.color = colors[Math.floor(Math.random() * colors.length)];
+        el.style.fontSize = (Math.random() * 20 + 10) + 'px';
+        el.style.animationDuration = (Math.random() * 5 + 3) + 's';
+        el.style.animationDelay = (Math.random() * 5) + 's';
+        container.appendChild(el);
+      }
+    }
+    createSnow();
+
+    /* --- AUDIO & ENTRY --- */
+    const AudioEngine = (() => {
+      let ctx, gain;
+      const init = () => {
+        if (!ctx) {
+          ctx = new(window.AudioContext || window.webkitAudioContext)();
+          gain = ctx.createGain();
+          gain.connect(ctx.destination);
+          gain.gain.value = 0.3;
+        }
+      };
+      return {
+        playClick: () => {
+          init();
+          if (ctx.state === 'suspended') ctx.resume();
+          const osc = ctx.createOscillator();
+          const g = ctx.createGain();
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(800, ctx.currentTime);
+          osc.frequency.exponentialRampToValueAtTime(100, ctx.currentTime + 0.1);
+          g.gain.setValueAtTime(0.3, ctx.currentTime);
+          g.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.1);
+          osc.connect(g);
+          g.connect(gain);
+          osc.start();
+          osc.stop(ctx.currentTime + 0.1);
+        },
+        playEntry: () => {
+          init();
+          const osc = ctx.createOscillator();
+          const g = ctx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(100, ctx.currentTime);
+          osc.frequency.exponentialRampToValueAtTime(800, ctx.currentTime + 1.0);
+          g.gain.setValueAtTime(0, ctx.currentTime);
+          g.gain.linearRampToValueAtTime(0.3, ctx.currentTime + 0.5);
+          g.gain.linearRampToValueAtTime(0, ctx.currentTime + 1.0);
+          osc.connect(g);
+          g.connect(gain);
+          osc.start();
+          osc.stop(ctx.currentTime + 1.0);
+        }
+      };
+    })();
+
+    function enterExperience() {
+      AudioEngine.playEntry();
+      const gate = document.getElementById('entrance-gate');
+      gate.style.transform = "scale(1.5)";
+      gate.style.opacity = "0";
+      setTimeout(() => {
+        gate.style.display = "none";
+        document.getElementById('mesh').style.opacity = "1";
+        document.body.classList.add('opened');
+      }, 800);
+    }
+
+    function updateClock() {
+      const el = document.getElementById('clock');
+      const now = new Date();
+      el.innerText = now.toLocaleString('en-IN', {
+        weekday: 'short', day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit'
+      });
+    }
+
+    document.querySelectorAll('.btn').forEach(b => {
+      b.addEventListener('click', (e) => {
+        AudioEngine.playClick();
+        if (navigator.vibrate) navigator.vibrate(25);
+        const r = document.createElement('span');
+        r.className = 'ripple';
+        const s = Math.max(b.clientWidth, b.clientHeight);
+        r.style.width = r.style.height = `${s}px`;
+        const rect = b.getBoundingClientRect();
+        r.style.left = `${e.clientX - rect.left - s/2}px`;
+        r.style.top = `${e.clientY - rect.top - s/2}px`;
+        b.appendChild(r);
+        setTimeout(() => r.remove(), 600);
+      });
+    });
+
+    document.addEventListener('click', (e) => {
+      const sModal = document.getElementById('settingsModal');
+      const sBtn = document.querySelector('.settings-icon');
+      if (!sModal.contains(e.target) && !sBtn.contains(e.target) && sModal.classList.contains('active')) {
+        sModal.classList.remove('active');
+      }
+    });
+
+    window.onload = () => { setInterval(updateClock, 1000); };
+  </script>
+</body>
+</html>
