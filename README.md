@@ -318,7 +318,7 @@
 
     <!-- VERY SMALL COLORFUL NAME FOR WELCOME PAGE -->
     <div class="welcome-small-name" data-key="name">Lalu Kumar Tanti</div>
-    <div class="subtitle">VERIFIED SULTAN</div>
+    <div class="subtitle">VERIFIED LALU KUMAR</div>
     
     <button class="enter-btn" onclick="enterExperience()">
       <i class="fa-solid fa-fingerprint"></i> <span data-key="enterBtn">Enter Profile</span>
@@ -361,7 +361,7 @@
     <h1 class="reveal" data-key="name">Lalu Kumar Tanti</h1>
     <div class="reveal location-text" data-key="location">Jaipur, Banka, Bihar, India</div>
     <div class="reveal" style="margin-top:10px;">
-      <span style="color: #000; background: var(--gold); padding: 4px 15px; border-radius: 20px; font-size: 11px; font-weight: 800;" data-key="verified">VERIFIED SULTAN</span>
+      <span style="color: #000; background: var(--gold); padding: 4px 15px; border-radius: 20px; font-size: 11px; font-weight: 800;" data-key="verified">VERIFIED LALU KUMAR</span>
     </div>
     <div id="clock" class="reveal" style="margin-top:12px; font-weight:800; color: var(--gold);"></div>
   </header>
@@ -407,14 +407,14 @@
     © 2026 LALU KUMAR TANTI | ALL RIGHTS RESERVED
   </footer>
 
-  <!-- SULTAN AI WIDGET -->
+  <!-- LALU  AI WIDGET -->
   <div class="ai-float-btn" onclick="toggleChat()">
     <i class="fa-solid fa-robot" style="font-size: 28px; color:#000;"></i>
   </div>
 
   <div class="ai-chat-window" id="chatWindow">
     <div class="chat-header">
-      <h3><i class="fa-solid fa-microchip" style="color:#000;"></i> SULTAN AI v2.0</h3>
+      <h3><i class="fa-solid fa-microchip" style="color:#000;"></i> LALU BRAIN AI v2.0</h3>
       <i class="fa-solid fa-xmark" onclick="toggleChat()" style="cursor:pointer; font-size:18px;"></i>
     </div>
     <div class="chat-body" id="chatBody">
@@ -423,7 +423,7 @@
         Ask me for his <b>Instagram</b>, <b>WhatsApp</b>, <b>GitHub</b>, or ask <b>"How to pay?"</b>.
       </div>
     </div>
-    <div class="typing" id="typingIndicator">Sultan AI is typing...</div>
+    <div class="typing" id="typingIndicator">Lalu Brain AI is typing...</div>
     <div class="chat-input-area">
       <input type="text" id="chatInput" class="chat-input" placeholder="Ask anything..." onkeypress="handleEnter(event)">
       <button class="chat-send" onclick="sendMessage()"><i class="fa-solid fa-paper-plane"></i></button>
