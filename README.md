@@ -313,7 +313,7 @@
       <div class="gyro-ring ring-2"></div>
       <div class="gyro-ring ring-1"></div>
       <!-- Google Profile Picture -->
-      <img src="https://i.ibb.co/X3L7m58/portrait.jpg" alt="Lalu Kumar Tanti" class="welcome-photo">
+      <img src="https://i.postimg.cc/Y0jPr7Vy/20251205-103059-IMG-STYLE.jpg" alt="Lalu Kumar Tanti" class="welcome-photo">
     </div>
 
     <!-- VERY SMALL COLORFUL NAME FOR WELCOME PAGE -->
@@ -356,7 +356,7 @@
 
   <header>
     <div class="profile-box reveal">
-      <img src="https://i.ibb.co/X3L7m58/portrait.jpg" alt="Lalu Kumar Tanti">
+      <img src="https://i.postimg.cc/Y0jPr7Vy/20251205-103059-IMG-STYLE.jpg" alt="Lalu Kumar Tanti">
     </div>
     <h1 class="reveal" data-key="name">Lalu Kumar Tanti</h1>
     <div class="reveal location-text" data-key="location">Jaipur, Banka, Bihar, India</div>
